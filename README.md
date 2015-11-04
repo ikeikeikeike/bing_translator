@@ -1,0 +1,2 @@
+# bing_translator
+fooo
