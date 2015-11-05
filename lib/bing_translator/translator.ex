@@ -1,7 +1,11 @@
 defmodule BingTranslator.Translator do
   use HTTPoison.Base
 
-  @default_endpoint "https://api.github.com"
+  @translate_uri = 'http://api.microsofttranslator.com/V2/Http.svc/Translate'
+  @detect_uri = 'http://api.microsofttranslator.com/V2/Http.svc/Detect'
+  @lang_code_list_uri = 'http://api.microsofttranslator.com/V2/Http.svc/GetLanguagesForTranslate'
+  @access_token_uri = 'https://datamarket.accesscontrol.windows.net/v2/OAuth2-13'
+  @speak_uri = 'http://api.microsofttranslator.com/v2/Http.svc/Speak'
 
   @info %{
     name: "BingTranslator",
@@ -15,11 +19,6 @@ defmodule BingTranslator.Translator do
   end
 
   defp url do
-    client_id = Application.get_env(:bing_translator, :client_id)
-    client_secret = Application.get_env(:bing_translator, :client_secret)
-    endpoint = Application.get_env(:bing_translator, :endpoint, @default_endpoint)
-    # "#{endpoint}/api/v3/projects/#{client_id}/notices?key=#{client_secret}"
-    "#{endpoint}/zen"
   end
 
 end
