@@ -6,7 +6,6 @@ defmodule BingTranslator do
   defdelegate configure, to: BingTranslator.Config, as: :configure
   defdelegate configure(client_id, client_secret), to: BingTranslator.Config, as: :configure
   defdelegate configure(client_id, client_secret, skip_ssl_verify), to: BingTranslator.Config, as: :configure
-  defdelegate set_access_token(token), to: BingTranslator.Config, as: :set_access_token
 
   @doc """
   translattion

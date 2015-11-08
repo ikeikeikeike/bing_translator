@@ -1,7 +1,7 @@
 defmodule BingTranslator.Config do
 
   defmodule Cfg do
-    defstruct client_id: nil, client_secret: nil, access_token: nil, skip_ssl_verify: nil
+    defstruct client_id: nil, client_secret: nil, token: nil, skip_ssl_verify: nil
   end
 
   def configure do
@@ -36,9 +36,13 @@ defmodule BingTranslator.Config do
   @doc """
   Set a access token (associated with a user, rather than an application)
   """
-  def set_access_token(token) do
-    set(:access_token, token)
+  def set_token(token) do
+    set(:token, token)
   end
+
+  # def set_expires_in(token) do
+    # set(:expires_in, token)
+  # end
 
   @doc """
   Get the configuration object
