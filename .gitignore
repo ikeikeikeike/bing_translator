@@ -7,3 +7,8 @@ erl_crash.dump
 /mix.lock
 /tags
 /config
+
+/.bundle/
+/Gemfile
+/Gemfile.lock
+/vendor/
