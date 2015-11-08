@@ -20,12 +20,13 @@ defmodule BingTranslator.Mixfile do
   end
 
   def application do
-    [ applications: [:httpoison]]
+    [ applications: [:httpoison, :logger, :tzdata]]
   end
 
   defp deps do
     [ {:httpoison, "~> 0.7.2"}, 
-      {:poison, "~> 1.5"}
+      {:poison, "~> 1.5"},
+      {:timex, "~> 0.19"}
     ]
   end
 
