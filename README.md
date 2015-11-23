@@ -62,3 +62,7 @@ languages = BingTranslator.supported_language_codes # => ["ar", "bs-Latn", "bg",
 
 audio = BingTranslator.speak("Hello. This will be spoken!", language: :en, format: "audio/mp3", options: "MaxQuality")
 ```
+
+### Documentation
+
+[API Reference](http://hexdocs.pm/bing_translator/api-reference.html).
