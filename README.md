@@ -6,23 +6,23 @@ This gem is inspired from Codeblock/bing_translator-gem and roomorama/bing_trans
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
-# Add bing_translator to your list of dependencies in `mix.exs`:
+### Add bing_translator to your list of dependencies in `mix.exs`:
 
-    ```elixir
-    def deps do
-      [{:bing_translator, "~> 0.0.1"}]
-    end
-    ```
+```elixir
+def deps do
+  [{:bing_translator, "~> 0.0.1"}]
+end
+```
 
-# Ensure bing_translator is started before your application:
+### Ensure bing_translator is started before your application:
 
-    ```elixir
-    def application do
-      [applications: [:bing_translator]]
-    end
-    ```
+```elixir
+def application do
+  [applications: [:bing_translator]]
+end
+```
 
-# Getting a Client ID and Secret
+#### Getting a Client ID and Secret
 
 
 To sign up for the free tier (as of this writing), do the following:
@@ -40,26 +40,25 @@ To sign up for the free tier (as of this writing), do the following:
    the 'Client ID' and 'Client secret' fields.
 
 
-Usage
-=====
+### Usage
 
-    ```elixir
-    # Specify all arguments
-    BingTranslator.configure("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", false)
+```elixir
+# Specify all arguments
+BingTranslator.configure("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", false)
 
-    # Or... Specify only required arguments
-    BingTranslator.configure("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
+# Or... Specify only required arguments
+BingTranslator.configure("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
 
-    spanish = BingTranslator.translate("Hello. This will be translated!", [from: "en", to: "es"])
+spanish = BingTranslator.translate("Hello. This will be translated!", [from: "en", to: "es"])
 
-    # without :from for auto language detection
-    spanish = BingTranslator.translate("Hello. This will be translated!", to: "es")
+# without :from for auto language detection
+spanish = BingTranslator.translate("Hello. This will be translated!", to: "es")
 
-    locale = BingTranslator.detect("Hello. This will be translated!") # => "en"
-    languages = BingTranslator.supported_language_codes # => ["ar", "bs-Latn", "bg", "ca", "zh-CHS",,,,,]
+locale = BingTranslator.detect("Hello. This will be translated!") # => "en"
+languages = BingTranslator.supported_language_codes # => ["ar", "bs-Latn", "bg", "ca", "zh-CHS",,,,,]
 
-    # The speak method calls a text-to-speech interface in the supplied language.
-    # It does not translate the text. Format can be 'audio/mp3' or 'audio/wav'
+# The speak method calls a text-to-speech interface in the supplied language.
+# It does not translate the text. Format can be 'audio/mp3' or 'audio/wav'
 
-    audio = BingTranslator.speak("Hello. This will be spoken!", language: :en, format: "audio/mp3", options: "MaxQuality")
-    ```
+audio = BingTranslator.speak("Hello. This will be spoken!", language: :en, format: "audio/mp3", options: "MaxQuality")
+```
