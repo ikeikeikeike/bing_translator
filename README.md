@@ -1,6 +1,6 @@
 # BingTranslator
 
-This gem is inspired from Codeblock/bing_translator-gem and roomorama/bing_translator
+A simple Ruby interface to Bing's translation API
 
 ## Installation
 
@@ -10,7 +10,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 ```elixir
 def deps do
-  [{:bing_translator, "~> 0.0.1"}]
+  [{:bing_translator, "~> 0.1.5"}]
 end
 ```
 
@@ -66,3 +66,10 @@ audio = BingTranslator.speak("Hello. This will be spoken!", language: :en, forma
 ### Documentation
 
 [API Reference](http://hexdocs.pm/bing_translator/api-reference.html).
+
+### Thanks
+
+This gem is inspired from Codeblock/bing_translator-gem and roomorama/bing_translator
+
+- [bing_translator ](https://github.com/roomorama/bing_translator )
+- [bing_translator-gem](https://github.com/Codeblock/bing_translator-gem)
