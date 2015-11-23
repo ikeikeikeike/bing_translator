@@ -20,19 +20,23 @@ defmodule BingTranslator.Mixfile do
   end
 
   def application do
-    [ applications: [:httpoison, :logger, :tzdata]]
+    [ applications: [
+        :logger, 
+        :tzdata, 
+        :httpoison]]
   end
 
   defp deps do
     [ {:httpoison, "~> 0.7.2"}, 
       {:poison, "~> 1.5"},
-      {:timex, "~> 0.19"}
+      {:timex, "~> 0.19"},
+      {:floki, "~> 0.7"}
     ]
   end
 
   defp package do
     [ contributors: ["Tatsuo Ikeda / ikeikeikeike"],
       licenses: ["MIT"],
-      links: %{"Github" => "https://github.com/ikeikeikeike/bing_translator"} ]
+      links: %{"github" => "https://github.com/ikeikeikeike/bing_translator"} ]
   end
 end
