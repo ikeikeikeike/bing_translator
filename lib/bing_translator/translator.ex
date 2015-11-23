@@ -2,21 +2,54 @@ defmodule BingTranslator.Translator do
   use Timex
   use HTTPoison.Base
 
-  @translate_uri "http://api.microsofttranslator.com/V2/Http.svc/Translate"
-  @detect_uri "http://api.microsofttranslator.com/V2/Http.svc/Detect"
-  @lang_code_list_uri "http://api.microsofttranslator.com/V2/Http.svc/GetLanguagesForTranslate"
   @access_token_uri "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13"
-  @speak_uri "http://api.microsofttranslator.com/v2/Http.svc/Speak"
 
-  @info %{
-    name: "BingTranslator",
-    version: BingTranslator.Mixfile.project[:version],
-    url: BingTranslator.Mixfile.project[:package][:links][:github]
-  }
+  @speak_uri "http://api.microsofttranslator.com/v2/Http.svc/Speak"
+  @detect_uri "http://api.microsofttranslator.com/V2/Http.svc/Detect"
+  @translate_uri "http://api.microsofttranslator.com/V2/Http.svc/Translate"
+  @translate_array_uri "http://api.microsofttranslator.com/V2/Http.svc/TranslateArray"
+  @lang_code_list_uri "http://api.microsofttranslator.com/V2/Http.svc/GetLanguagesForTranslate"
 
   def translate(text, options \\ []) do
-    url 
-    |> get
+    params = %{
+      text: text,
+      to: options[:to],
+      from: options[:from],
+      category: "general",
+      contentType: "text/plain"
+    }    
+
+    result(@translate_uri, params).body
+    |> Floki.find("string") |> Floki.text
+  end
+
+  def detect(text) do
+    params = %{
+      text: text,
+      category: "general",
+      contentType: "text/plain"
+    }
+
+    result(@detect_uri, params).body
+    |> Floki.find("string") |> Floki.text
+  end
+
+  # format:   "audio/wav" [default] or "audio/mp3"
+  # language: valid translator language code
+  # options:  "MinSize" [default] or "MaxQuality"
+  def speak(text, options \\ []) do
+    params = %{
+      text: text,
+      format: options[:format],
+      language: options[:language]
+    }
+
+    result(@speak_uri, params, %{"Content-Type" => options[:format]}).body
+  end
+
+  def supported_language_codes do
+    result(@lang_code_list_uri, %{}).body
+    |> Floki.find("string") |> Enum.map(fn(lang) -> Floki.text(lang) end)
   end
 
   def get_access_token! do
@@ -34,7 +67,7 @@ defmodule BingTranslator.Translator do
             grant_type: "client_credentials"
           ]
         }
-        token = HTTPoison.post!(@access_token_uri, body)
+        token = post!(@access_token_uri, body)
         |> parse_token
 
         token |> BingTranslator.Config.set_token 
@@ -51,10 +84,13 @@ defmodule BingTranslator.Translator do
     end)
   end
 
-  @test_endpoint "https://api.github.com"
+  defp result(url, params, headers \\ []) do
+    auth = "Bearer #{get_access_token!["access_token"]}"
+    headers = headers
+              |> Enum.into(%{})
+              |> Map.merge(%{"Authorization" => auth})
 
-  defp url do
-    "#{@test_endpoint}/zen"
+    get!("#{url}?#{URI.encode_query(params)}", headers)
   end
 
 end
