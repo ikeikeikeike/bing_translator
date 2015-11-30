@@ -19,7 +19,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 ```elixir
 def deps do
-  [{:bing_translator, "~> 0.1.5"}]
+  [{:bing_translator, "~> 0.2"}]
 end
 ```
 
@@ -58,6 +58,9 @@ BingTranslator.configure("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", false)
 # Or... Specify only required arguments
 BingTranslator.configure("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
 
+# Or... If already sets key and secret in config.exe
+BingTranslator.configure
+
 spanish = BingTranslator.translate("Hello. This will be translated!", [from: "en", to: "es"])
 
 # without :from for auto language detection
@@ -70,6 +73,19 @@ languages = BingTranslator.supported_language_codes # => ["ar", "bs-Latn", "bg",
 # It does not translate the text. Format can be 'audio/mp3' or 'audio/wav'
 
 audio = BingTranslator.speak("Hello. This will be spoken!", language: :en, format: "audio/mp3", options: "MaxQuality")
+```
+
+### Configuration
+
+The default behaviour is to configure using the application environment:
+
+In config/config.exs, add:
+
+```elixir
+config :bing_translator,
+   client_id: "YOUR_CLIENT_ID",
+   client_secret: "YOUR_CLIENT_SECRET=",
+   skip_ssl_verify: false
 ```
 
 ### Documentation
