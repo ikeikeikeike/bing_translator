@@ -9,7 +9,7 @@
 [![Code Climate](http://img.shields.io/badge/code_climate-Erlang_17.4-brightgreen.svg?style=flat-square)](https://travis-ci.org/ikeikeikeike/bing_translator)\
 )
 
-A simple Ruby interface to Bing's translation API
+A simple Elixir interface to Bing's translation API
 
 ## Installation
 
