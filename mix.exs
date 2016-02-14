@@ -8,26 +8,26 @@ defmodule BingTranslator.Mixfile do
   def project do
     [ app: :bing_translator,
       name: "BingTranslator",
-      version: "0.2.2",
+      version: "0.2.3",
       elixir: "~> 1.1",
       description: @description,
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       package: package,
       deps: deps,
-      source_url: "https://github.com/ikeikeikeike/bing_translator" 
+      source_url: "https://github.com/ikeikeikeike/bing_translator"
     ]
   end
 
   def application do
     [ applications: [
-        :logger, 
-        :tzdata, 
+        :logger,
+        :tzdata,
         :httpoison]]
   end
 
   defp deps do
-    [ {:httpoison, "~> 0.8"}, 
+    [ {:httpoison, "~> 0.8"},
       {:poison, "~> 1.5"},
       {:timex, "~> 0.19"},
       {:floki, "~> 0.7"},
