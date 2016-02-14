@@ -18,8 +18,8 @@ defmodule BingTranslator.Config do
   """
   def configure(client_id, client_secret) do
     start_link(%Cfg{
-      client_id: client_id, 
-      client_secret: client_secret, 
+      client_id: client_id,
+      client_secret: client_secret,
       skip_ssl_verify: Application.get_env(:bing_translator, :skip_ssl_verify) || System.get_env("BING_TRANSLATOR_SKIP_SSL_VERIFY") || false
     })
     {:ok, []}

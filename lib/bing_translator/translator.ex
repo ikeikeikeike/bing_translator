@@ -17,7 +17,7 @@ defmodule BingTranslator.Translator do
       from: options[:from],
       category: "general",
       contentType: "text/plain"
-    }    
+    }
 
     result(@translate_uri, params).body
     |> Floki.find("string") |> Floki.text
@@ -56,39 +56,51 @@ defmodule BingTranslator.Translator do
     config = BingTranslator.Config.get
     token = config.token
 
-    case token && token["access_token"] && Time.now(:secs) < token["expires_in"] do
+    case token && token[:access_token] && Time.now(:secs) < token[:expires_in] do
       true ->
         token
       _ ->
         body = {:form, [
-            client_id: config.client_id, 
-            client_secret: config.client_secret, 
-            scope: "http://api.microsofttranslator.com", 
+            client_id: config.client_id,
+            client_secret: config.client_secret,
+            scope: "http://api.microsofttranslator.com",
             grant_type: "client_credentials"
           ]
         }
-        token = post!(@access_token_uri, body)
-        |> parse_token
+        token =
+          post!(@access_token_uri, body)
+          |> parse_token
 
-        token |> BingTranslator.Config.set_token 
+        BingTranslator.Config.set_token(token)
         token
     end
   end
 
   defp parse_token(response) do
-    response.body 
-    |> Poison.decode! 
-    |> Enum.filter(fn{k, _} -> k in ["expires_in", "access_token"] end)
-    |> Enum.map(fn{k, v} -> 
-    {k, if k == "expires_in" do Time.now(:secs) + String.to_integer(v) else v end} 
+    response.body
+    |> Poison.decode!
+    |> Enum.filter(fn{k, _} ->
+      k in ["expires_in", "access_token"]
+    end)
+    |> Enum.map(fn{k, v} ->
+      value =
+        case k do
+          "expires_in" ->
+            Time.now(:secs) + String.to_integer(v)
+          _ ->
+            v
+        end
+      {String.to_atom(k), value}
     end)
   end
 
   defp result(url, params, headers \\ []) do
-    auth = "Bearer #{get_access_token!["access_token"]}"
-    headers = headers
-              |> Enum.into(%{})
-              |> Map.merge(%{"Authorization" => auth})
+    auth = "Bearer #{get_access_token![:access_token]}"
+
+    headers =
+      headers
+      |> Enum.into(%{})
+      |> Map.merge(%{"Authorization" => auth})
 
     get!("#{url}?#{URI.encode_query(params)}", headers)
   end
