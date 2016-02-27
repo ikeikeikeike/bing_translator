@@ -29,7 +29,7 @@ defmodule BingTranslator.Mixfile do
   defp deps do
     [ {:httpoison, "~> 0.8"},
       {:poison, "~> 1.5"},
-      {:timex, "~> 0.19"},
+      {:timex, "~> 1.0"},
       {:floki, "~> 0.7"},
       {:earmark, "~> 0.1", only: :dev},
       {:ex_doc, "~> 0.11", only: :dev}
