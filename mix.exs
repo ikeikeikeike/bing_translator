@@ -8,8 +8,8 @@ defmodule BingTranslator.Mixfile do
   def project do
     [ app: :bing_translator,
       name: "BingTranslator",
-      version: "0.2.5",
-      elixir: "~> 1.1",
+      version: "0.2.6",
+      elixir: ">= 1.0.0",
       description: @description,
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
@@ -23,8 +23,7 @@ defmodule BingTranslator.Mixfile do
     [ applications: [
         :logger,
         :tzdata,
-        :httpoison,
-        :floki]]
+        :httpoison]]
   end
 
   defp deps do
