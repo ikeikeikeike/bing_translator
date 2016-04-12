@@ -56,7 +56,7 @@ defmodule BingTranslator.Translator do
     config = BingTranslator.Config.get
     token = config.token
 
-    case token && token[:access_token] && Time.now(:secs) < token[:expires_in] do
+    case token && token[:access_token] && Time.now(:seconds) < token[:expires_in] do
       true ->
         token
       _ ->
@@ -86,7 +86,7 @@ defmodule BingTranslator.Translator do
       value =
         case k do
           "expires_in" ->
-            Time.now(:secs) + String.to_integer(v)
+            Time.now(:seconds) + String.to_integer(v)
           _ ->
             v
         end
