@@ -30,7 +30,8 @@ defmodule BingTranslator.Mixfile do
       {:poison, ">= 0.0.0"},
       {:floki, ">= 0.0.0"},
       {:earmark, "~> 0.1", only: :dev},
-      {:ex_doc, "~> 0.11", only: :dev}
+      {:ex_doc, "~> 0.11", only: :dev},
+      {:inch_ex, only: :docs},
     ]
   end
 
