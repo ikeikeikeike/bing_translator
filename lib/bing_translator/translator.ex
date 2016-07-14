@@ -1,5 +1,4 @@
 defmodule BingTranslator.Translator do
-  use Timex
   use HTTPoison.Base
 
   @access_token_uri "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13"
@@ -56,7 +55,7 @@ defmodule BingTranslator.Translator do
     config = BingTranslator.Config.get
     token = config.token
 
-    case token && token[:access_token] && Time.now(:seconds) < token[:expires_in] do
+    case token && token[:access_token] && :os.system_time(:seconds) < token[:expires_in] do
       true ->
         token
       _ ->
@@ -86,7 +85,7 @@ defmodule BingTranslator.Translator do
       value =
         case k do
           "expires_in" ->
-            Time.now(:seconds) + String.to_integer(v)
+            :os.system_time(:seconds) + String.to_integer(v)
           _ ->
             v
         end
