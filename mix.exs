@@ -20,7 +20,7 @@ defmodule BingTranslator.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :httpoison]]
+    [applications: [:logger, :httpoison, :floki]]
   end
 
   defp deps do
