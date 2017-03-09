@@ -1,14 +1,15 @@
 defmodule BingTranslator.Config do
 
   defmodule Cfg do
-    defstruct client_id: nil, client_secret: nil, token: nil, skip_ssl_verify: nil
+    defstruct client_id: nil, client_secret: nil, token: nil, skip_ssl_verify: nil, http_options: []
   end
 
   def configure do
     start_link(%Cfg{
       client_id: Application.get_env(:bing_translator, :client_id) || System.get_env("BING_TRANSLATOR_CLIENT_ID"),
       client_secret: Application.get_env(:bing_translator, :client_secret) || System.get_env("BING_TRANSLATOR_CLIENT_SECRET"),
-      skip_ssl_verify: Application.get_env(:bing_translator, :skip_ssl_verify) || System.get_env("BING_TRANSLATOR_SKIP_SSL_VERIFY") || false
+      skip_ssl_verify: Application.get_env(:bing_translator, :skip_ssl_verify) || System.get_env("BING_TRANSLATOR_SKIP_SSL_VERIFY") || false,
+      http_options: Application.get_env(:bing_translator, :http_options) || System.get_env("BING_TRANSLATOR_HTTP_OPTIONS") || []
     })
     {:ok, []}
   end
@@ -20,7 +21,8 @@ defmodule BingTranslator.Config do
     start_link(%Cfg{
       client_id: client_id,
       client_secret: client_secret,
-      skip_ssl_verify: Application.get_env(:bing_translator, :skip_ssl_verify) || System.get_env("BING_TRANSLATOR_SKIP_SSL_VERIFY") || false
+      skip_ssl_verify: Application.get_env(:bing_translator, :skip_ssl_verify) || System.get_env("BING_TRANSLATOR_SKIP_SSL_VERIFY") || false,
+      http_options: Application.get_env(:bing_translator, :http_options) || System.get_env("BING_TRANSLATOR_HTTP_OPTIONS") || []
     })
     {:ok, []}
   end
@@ -30,6 +32,14 @@ defmodule BingTranslator.Config do
   """
   def configure(client_id, client_secret, skip_ssl_verify) do
     start_link(%Cfg{client_id: client_id, client_secret: client_secret, skip_ssl_verify: skip_ssl_verify})
+    {:ok, []}
+  end
+
+  @doc """
+  Set OAuth configuration values and initialise the process
+  """
+  def configure(client_id, client_secret, skip_ssl_verify, http_options) do
+    start_link(%Cfg{client_id: client_id, client_secret: client_secret, skip_ssl_verify: skip_ssl_verify, http_options: http_options})
     {:ok, []}
   end
 

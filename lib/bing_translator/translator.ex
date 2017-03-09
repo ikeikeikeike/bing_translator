@@ -65,7 +65,7 @@ defmodule BingTranslator.Translator do
           ]
         }
         token =
-          HTTPoison.post!(@access_token_uri, body, [ssl: [{:versions, [:'tlsv1.2']}]])
+          HTTPoison.post!(@access_token_uri, body, config.http_options)
           |> parse_token
 
         BingTranslator.Config.set_token(token)
@@ -101,5 +101,4 @@ defmodule BingTranslator.Translator do
 
     HTTPoison.get!("#{url}?#{URI.encode_query(params)}", headers)
   end
-
 end

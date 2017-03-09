@@ -8,7 +8,7 @@ defmodule BingTranslator.Mixfile do
   def project do
     [ app: :bing_translator,
       name: "BingTranslator",
-      version: "0.5.0",
+      version: "0.5.1",
       elixir: ">= 1.0.0",
       description: @description,
       build_embedded: Mix.env == :prod,
