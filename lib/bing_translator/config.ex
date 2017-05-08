@@ -1,46 +1,35 @@
 defmodule BingTranslator.Config do
+  @moduledoc """
+  Configuration State
+  """
 
   defmodule Cfg do
-    defstruct client_id: nil, client_secret: nil, token: nil, skip_ssl_verify: nil, http_options: []
+    @moduledoc "Cfg struct"
+    defstruct subscription_key: nil, http_client_options: [], token: nil, expires_in: nil
   end
 
   def configure do
     start_link(%Cfg{
-      client_id: Application.get_env(:bing_translator, :client_id) || System.get_env("BING_TRANSLATOR_CLIENT_ID"),
-      client_secret: Application.get_env(:bing_translator, :client_secret) || System.get_env("BING_TRANSLATOR_CLIENT_SECRET"),
-      skip_ssl_verify: Application.get_env(:bing_translator, :skip_ssl_verify) || System.get_env("BING_TRANSLATOR_SKIP_SSL_VERIFY") || false,
-      http_options: Application.get_env(:bing_translator, :http_options) || System.get_env("BING_TRANSLATOR_HTTP_OPTIONS") || []
+      subscription_key: Application.get_env(:bing_translator, :subscription_key) || System.get_env("BING_TRANSLATOR_SUBSCRIPTION_KEY"),
+      http_client_options: Application.get_env(:bing_translator, :http_client_options) || System.get_env("BING_TRANSLATOR_HTTP_CLIENT_OPTIONS") || []
     })
-    {:ok, []}
   end
 
   @doc """
   Set OAuth configuration values and initialise the process
   """
-  def configure(client_id, client_secret) do
+  def configure(subscription_key) do
     start_link(%Cfg{
-      client_id: client_id,
-      client_secret: client_secret,
-      skip_ssl_verify: Application.get_env(:bing_translator, :skip_ssl_verify) || System.get_env("BING_TRANSLATOR_SKIP_SSL_VERIFY") || false,
-      http_options: Application.get_env(:bing_translator, :http_options) || System.get_env("BING_TRANSLATOR_HTTP_OPTIONS") || []
+      subscription_key: subscription_key,
+      http_client_options: Application.get_env(:bing_translator, :http_client_options) || System.get_env("BING_TRANSLATOR_HTTP_OPTIONS") || []
     })
-    {:ok, []}
   end
 
   @doc """
   Set OAuth configuration values and initialise the process
   """
-  def configure(client_id, client_secret, skip_ssl_verify) do
-    start_link(%Cfg{client_id: client_id, client_secret: client_secret, skip_ssl_verify: skip_ssl_verify})
-    {:ok, []}
-  end
-
-  @doc """
-  Set OAuth configuration values and initialise the process
-  """
-  def configure(client_id, client_secret, skip_ssl_verify, http_options) do
-    start_link(%Cfg{client_id: client_id, client_secret: client_secret, skip_ssl_verify: skip_ssl_verify, http_options: http_options})
-    {:ok, []}
+  def configure(subscription_key, http_client_options) do
+    start_link(%Cfg{subscription_key: subscription_key, http_client_options: http_client_options})
   end
 
   @doc """
@@ -50,23 +39,25 @@ defmodule BingTranslator.Config do
     set(:token, token)
   end
 
-  # def set_expires_in(token) do
-    # set(:expires_in, token)
-  # end
-
-  @doc """
-  Get the configuration object
-  """
   def get do
     Agent.get(__MODULE__, fn config -> config end)
   end
 
-  defp set(key, value) do
+  def set(key, value) do
     Agent.update(__MODULE__, fn config ->
       Map.update!(config, key, fn _ -> value end)
     end)
   end
 
+  def update(overwrite) do
+    Enum.each overwrite, fn {key, value} ->
+      set(key, value)
+    end
+  end
+
+  def start_link do
+    configure()
+  end
   defp start_link(value) do
     Agent.start_link(fn -> value end, name: __MODULE__)
   end
