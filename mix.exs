@@ -6,7 +6,8 @@ defmodule BingTranslator.Mixfile do
   """
 
   def project do
-    [ app: :bing_translator,
+    [
+      app: :bing_translator,
       name: "BingTranslator",
       version: "1.0.0",
       elixir: ">= 1.0.0",
@@ -25,9 +26,10 @@ defmodule BingTranslator.Mixfile do
   end
 
   defp deps do
-    [ {:httpoison, "~> 0.11"},
-      {:poison, ">= 3.0.0"},
-
+    [
+      {:httpoison, "~> 0.11"},
+      {:floki, "~> 0.17"},
+      {:xml_builder, "~> 0.0"},
       {:credo, "~> 0.7"},
       {:earmark, "~> 1.2", only: :dev},
       {:ex_doc, "~> 0.15", only: :dev},
@@ -36,8 +38,10 @@ defmodule BingTranslator.Mixfile do
   end
 
   defp package do
-    [ maintainers: ["Tatsuo Ikeda / ikeikeikeike"],
+    [
+      maintainers: ["Tatsuo Ikeda / ikeikeikeike"],
       licenses: ["MIT"],
-      links: %{"github" => "https://github.com/ikeikeikeike/bing_translator"} ]
+      links: %{"github" => "https://github.com/ikeikeikeike/bing_translator"}
+    ]
   end
 end
