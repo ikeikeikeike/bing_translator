@@ -1,15 +1,12 @@
-# BingTranslator  
+# Bing Translator, Microsoft Translator
 
 [![Build Status](http://img.shields.io/travis/ikeikeikeike/bing_translator.svg?style=flat-square)](http://travis-ci.org/ikeikeikeike/bing_translator)
 [![Hex version](https://img.shields.io/hexpm/v/bing_translator.svg "Hex version")](https://hex.pm/packages/bing_translator)
 [![Hex downloads](https://img.shields.io/hexpm/dt/bing_translator.svg "Hex downloads")](https://hex.pm/packages/bing_translator)
-
-[](
 [![Release](http://img.shields.io/github/release/ikeikeikeike/bing_translator.svg?style=flat-square)](https://github.com/ikeikeikeike/bing_translator/releases/latest)\
 [![Code Climate](http://img.shields.io/badge/code_climate-Erlang_17.4-brightgreen.svg?style=flat-square)](https://travis-ci.org/ikeikeikeike/bing_translator)\
-)
 
-A simple Elixir interface to Bing's translation API
+A simple Elixir interface to Azure's translation API
 
 ## Installation
 
@@ -19,7 +16,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 ```elixir
 def deps do
-  [{:bing_translator, "~> 0.2"}]
+  [{:bing_translator, "~> 1.0"}]
 end
 ```
 
@@ -31,36 +28,16 @@ def application do
 end
 ```
 
-#### Getting a Client ID and Secret
-
+#### Getting a Subscription Key
 
 To sign up for the free tier (as of this writing), do the following:
 
-1. Go [here](http://go.microsoft.com/?linkid=9782667)
-2. Sign in with valid MSN credentials.
-3. On the right side, click 'SIGN UP', under the $0.00 option.
-4. Read and accept the terms and conditions and click the big 'SIGN UP'
-   button.
-5. [Create a new application](https://datamarket.azure.com/developer/applications).
-   Fill in a unique client ID, give it a valid name, give it a valid redirect
-   URI (not actually used by the Bing Translator API, so it can be anything)
-   and hit 'CREATE'.
-6. Click on the name of your application to see the info again. You'll need
-   the 'Client ID' and 'Client secret' fields.
-
+- Text Translator is [here](http://docs.microsofttranslator.com/text-translate.html)
+- Speech Translator is [here](http://docs.microsofttranslator.com/speech-translate.html)
 
 ### Usage
 
 ```elixir
-# Specify all arguments
-BingTranslator.configure("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", false)
-
-# Or... Specify only required arguments
-BingTranslator.configure("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
-
-# Or... If already sets key and secret in config.exe
-BingTranslator.configure
-
 spanish = BingTranslator.translate("Hello. This will be translated!", [from: "en", to: "es"])
 
 # without :from for auto language detection
@@ -83,18 +60,10 @@ In config/config.exs, add:
 
 ```elixir
 config :bing_translator,
-   client_id: "YOUR_CLIENT_ID",
-   client_secret: "YOUR_CLIENT_SECRET",
-   skip_ssl_verify: false
+  subscription_key: "Your-Subscription-Key",
+  http_client_options: []  #  [ssl: [{:versions, [:"tlsv1.2"]}]]
 ```
 
 ### Documentation
 
 [API Reference](http://hexdocs.pm/bing_translator/api-reference.html).
-
-### Thanks
-
-This gem is inspired from Codeblock/bing_translator-gem and roomorama/bing_translator
-
-- [bing_translator ](https://github.com/roomorama/bing_translator )
-- [bing_translator-gem](https://github.com/Codeblock/bing_translator-gem)
