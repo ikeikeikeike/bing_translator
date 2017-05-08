@@ -9,7 +9,7 @@ defmodule BingTranslator.Mixfile do
     [
       app: :bing_translator,
       name: "BingTranslator",
-      version: "1.0.1",
+      version: "1.0.2",
       elixir: ">= 1.0.0",
       description: @description,
       build_embedded: Mix.env == :prod,
@@ -21,7 +21,7 @@ defmodule BingTranslator.Mixfile do
   end
 
   def application do
-    [extra_applications: [:logger],
+    [applications: [:logger, :httpoison, :floki, :xml_builder],
      mod: {BingTranslator.Application, []}]
   end
 
