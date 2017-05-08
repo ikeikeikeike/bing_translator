@@ -37,18 +37,18 @@ To sign up for the free tier (as of this writing), do the following:
 ### Usage
 
 ```elixir
-spanish = BingTranslator.translate("Hello. This will be translated!", [from: "en", to: "es"])
+spanish = BingTranslator.translate(text: "Hello. This will be translated!", from: "en", to: "es")
 
 # without :from for auto language detection
-spanish = BingTranslator.translate("Hello. This will be translated!", to: "es")
+spanish = BingTranslator.translate(text: "Hello. This will be translated!", to: "es")
 
-locale = BingTranslator.detect("Hello. This will be translated!") # => "en"
+locale = BingTranslator.detect(text: "Hello. This will be translated!") # => "en"
 languages = BingTranslator.supported_language_codes # => ["ar", "bs-Latn", "bg", "ca", "zh-CHS",,,,,]
 
 # The speak method calls a text-to-speech interface in the supplied language.
 # It does not translate the text. Format can be 'audio/mp3' or 'audio/wav'
 
-audio = BingTranslator.speak("Hello. This will be spoken!", language: :en, format: "audio/mp3", options: "MaxQuality")
+audio = BingTranslator.speak(text: "Hello. This will be spoken!", language: :en, format: "audio/mp3", options: "MaxQuality")
 ```
 
 ### Configuration
