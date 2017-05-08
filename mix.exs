@@ -9,7 +9,7 @@ defmodule BingTranslator.Mixfile do
     [
       app: :bing_translator,
       name: "BingTranslator",
-      version: "1.0.0",
+      version: "1.0.1",
       elixir: ">= 1.0.0",
       description: @description,
       build_embedded: Mix.env == :prod,
@@ -30,7 +30,7 @@ defmodule BingTranslator.Mixfile do
       {:httpoison, "~> 0.11"},
       {:floki, "~> 0.17"},
       {:xml_builder, "~> 0.0"},
-      {:credo, "~> 0.7"},
+      {:credo, "~> 0.7", only: :dev},
       {:earmark, "~> 1.2", only: :dev},
       {:ex_doc, "~> 0.15", only: :dev},
       {:inch_ex, ">= 0.0.0", only: :docs},
