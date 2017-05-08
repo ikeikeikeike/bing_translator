@@ -63,6 +63,11 @@ config :bing_translator,
   http_client_options: []  #  [ssl: [{:versions, [:"tlsv1.2"]}]]
 ```
 
+Or using environment variable
+```shell
+BING_TRANSLATOR_SUBSCRIPTION_KEY=Your-Subscription-Key mix run
+```
+
 ### Documentation
 
 [API Reference](http://hexdocs.pm/bing_translator/api-reference.html).
