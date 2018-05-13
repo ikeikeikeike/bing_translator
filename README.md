@@ -1,5 +1,6 @@
 # Bing Translator, Microsoft Translator
 
+
 [![Build Status](http://img.shields.io/travis/ikeikeikeike/bing_translator.svg?style=flat-square)](http://travis-ci.org/ikeikeikeike/bing_translator)
 [![Hex version](https://img.shields.io/hexpm/v/bing_translator.svg "Hex version")](https://hex.pm/packages/bing_translator)
 [![Hex downloads](https://img.shields.io/hexpm/dt/bing_translator.svg "Hex downloads")](https://hex.pm/packages/bing_translator)
