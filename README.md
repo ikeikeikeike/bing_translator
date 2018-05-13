@@ -3,7 +3,6 @@
 [![Build Status](http://img.shields.io/travis/ikeikeikeike/bing_translator.svg?style=flat-square)](http://travis-ci.org/ikeikeikeike/bing_translator)
 [![Hex version](https://img.shields.io/hexpm/v/bing_translator.svg "Hex version")](https://hex.pm/packages/bing_translator)
 [![Hex downloads](https://img.shields.io/hexpm/dt/bing_translator.svg "Hex downloads")](https://hex.pm/packages/bing_translator)
-[![Code Climate](http://img.shields.io/badge/code_climate-Erlang_17.4-brightgreen.svg?style=flat-square)](https://travis-ci.org/ikeikeikeike/bing_translator)
 
 A simple Elixir interface to Azure's translation API
 

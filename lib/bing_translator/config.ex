@@ -10,8 +10,12 @@ defmodule BingTranslator.Config do
 
   def configure do
     start_link(%Cfg{
-      subscription_key: Application.get_env(:bing_translator, :subscription_key) || System.get_env("BING_TRANSLATOR_SUBSCRIPTION_KEY"),
-      http_client_options: Application.get_env(:bing_translator, :http_client_options) || System.get_env("BING_TRANSLATOR_HTTP_CLIENT_OPTIONS") || []
+      subscription_key:
+        Application.get_env(:bing_translator, :subscription_key) ||
+          System.get_env("BING_TRANSLATOR_SUBSCRIPTION_KEY"),
+      http_client_options:
+        Application.get_env(:bing_translator, :http_client_options) ||
+          System.get_env("BING_TRANSLATOR_HTTP_CLIENT_OPTIONS") || []
     })
   end
 
@@ -21,7 +25,9 @@ defmodule BingTranslator.Config do
   def configure(subscription_key) do
     start_link(%Cfg{
       subscription_key: subscription_key,
-      http_client_options: Application.get_env(:bing_translator, :http_client_options) || System.get_env("BING_TRANSLATOR_HTTP_OPTIONS") || []
+      http_client_options:
+        Application.get_env(:bing_translator, :http_client_options) ||
+          System.get_env("BING_TRANSLATOR_HTTP_OPTIONS") || []
     })
   end
 
@@ -50,14 +56,15 @@ defmodule BingTranslator.Config do
   end
 
   def update(overwrite) do
-    Enum.each overwrite, fn {key, value} ->
+    Enum.each(overwrite, fn {key, value} ->
       set(key, value)
-    end
+    end)
   end
 
   def start_link do
     configure()
   end
+
   defp start_link(value) do
     Agent.start_link(fn -> value end, name: __MODULE__)
   end

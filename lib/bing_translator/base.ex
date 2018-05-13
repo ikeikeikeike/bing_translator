@@ -8,16 +8,18 @@ defmodule BingTranslator.Base do
       alias BingTranslator.Config
 
       @endpoint unquote(endpoint)
-      @expires 480  # secs
+      # secs
+      @expires 480
 
       def process_url(path) do
-        Path.join @endpoint, path
+        Path.join(@endpoint, path)
       end
 
       def process_request_body(body) do
         case body do
           {:form, form} ->
             {:form, transform(form)}
+
           body ->
             body
         end
@@ -28,12 +30,13 @@ defmodule BingTranslator.Base do
         |> Map.merge(%{"Authorization" => "Bearer #{access_token!()}"})
         |> Enum.into([])
       end
+
       def process_request_headers(headers) do
-        Keyword.merge headers, ["Authorization": "Bearer #{access_token!()}"]
+        Keyword.merge(headers, Authorization: "Bearer #{access_token!()}")
       end
 
       def process_request_options(options) do
-        Keyword.merge options, parse_http_options()
+        Keyword.merge(options, parse_http_options())
       end
 
       def process_response_body(body) do
@@ -51,14 +54,14 @@ defmodule BingTranslator.Base do
 
       @token_uri "https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key="
       defp access_token! do
-        cfg = Config.get
+        cfg = Config.get()
 
         if cfg.expires_in && rightnow() < cfg.expires_in do
           cfg.token
         else
           uri = @token_uri <> parse_env(cfg.subscription_key)
-          r = HTTPoison.post! uri, 'nothing', [], parse_http_options(:ssl)
-          Config.update token: r.body, expires_in: rightnow() + @expires
+          r = HTTPoison.post!(uri, 'nothing', [], parse_http_options(:ssl))
+          Config.update(token: r.body, expires_in: rightnow() + @expires)
 
           r.body
         end
@@ -71,14 +74,16 @@ defmodule BingTranslator.Base do
       defp parse_env({:system, env}) when is_binary(env) do
         System.get_env(env) || ""
       end
+
       defp parse_env(uri) do
         uri
       end
 
       @base_http_options [ssl: [{:versions, [:"tlsv1.2"]}]]
       defp parse_http_options(:ssl) do
-        Keyword.merge @base_http_options, Config.get.http_client_options
+        Keyword.merge(@base_http_options, Config.get().http_client_options)
       end
+
       defp parse_http_options do
         base =
           if String.starts_with?(@endpoint, "https") do
@@ -87,9 +92,8 @@ defmodule BingTranslator.Base do
             []
           end
 
-        Keyword.merge base, Config.get.http_client_options
+        Keyword.merge(base, Config.get().http_client_options)
       end
-
     end
   end
 end

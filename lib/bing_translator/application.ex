@@ -12,7 +12,7 @@ defmodule BingTranslator.Application do
     children = [
       # Starts a worker by calling: BingTranslator.Worker.start_link(arg1, arg2, arg3)
       # worker(BingTranslator.Worker, [arg1, arg2, arg3]),
-      worker(BingTranslator.Config, [], restart: :transient),
+      worker(BingTranslator.Config, [], restart: :transient)
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

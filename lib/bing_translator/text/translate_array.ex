@@ -14,9 +14,10 @@ defmodule BingTranslator.Text.TranslateArray do
   import XmlBuilder
 
   def run(params) do
-    case post "/TranslateArray", build(params), %{"Content-type" => "application/xml"} do
+    case post("/TranslateArray", build(params), %{"Content-type" => "application/xml"}) do
       {:ok, %{body: xml}} when is_binary(xml) ->
-        parse xml
+        parse(xml)
+
       error ->
         error
     end
@@ -24,33 +25,38 @@ defmodule BingTranslator.Text.TranslateArray do
 
   @xmlns "http://schemas.microsoft.com/2003/10/Serialization/Arrays"
   defp build(params) do
-    kw = transform params
+    kw = transform(params)
 
     built =
-      element :TranslateArrayRequest, erase([
-        element(:AppId, "Bearer #{access_token!()}"),
-        (if kw[:from], do: element(:From, kw[:from])),
-        element(:Texts, Enum.map(kw[:texts], fn text ->
-          element(:string, %{xmlns: @xmlns}, text)
-        end)),
-        element(:To, kw[:to]),
-      ])
+      element(
+        :TranslateArrayRequest,
+        erase([
+          element(:AppId, "Bearer #{access_token!()}"),
+          if(kw[:from], do: element(:From, kw[:from])),
+          element(
+            :Texts,
+            Enum.map(kw[:texts], fn text ->
+              element(:string, %{xmlns: @xmlns}, text)
+            end)
+          ),
+          element(:To, kw[:to])
+        ])
+      )
 
-    generate built
+    generate(built)
   end
 
   defp parse(xml) do
     Floki.find(xml, "translatedtext")
     |> Floki.text(sep: " ")
-    |> String.split
+    |> String.split()
   end
 
   defp erase(elems) do
-    Enum.filter elems, fn
+    Enum.filter(elems, fn
       e when is_list(e) -> erase(e)
       nil -> false
       elm -> !!elem(elm, 2)
-    end
+    end)
   end
-
 end
